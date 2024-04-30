@@ -8,7 +8,7 @@ const Login = () => {
   const initialState = {
     email: "",
     password: "",
-  }
+  };
   const [formData, setFormData] = useState(initialState);
 
   const handleChange = (e) => {
@@ -65,7 +65,12 @@ const Login = () => {
               <Form onSubmit={handleSubmit}>
                 {inputes.map((item, i) => (
                   // console.log(item);
-                  <CustomInput key={i} {...item} onChange={handleChange}/>
+                  <CustomInput
+                    key={i}
+                    {...item}
+                    value={formData[item.name]}
+                    onChange={handleChange}
+                  />
                 ))}
                 <div className="d-grid">
                   <Button type="submit">Login...</Button>

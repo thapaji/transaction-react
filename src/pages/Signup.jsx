@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { TopNav } from "../components/TopNav";
 import { Footer } from "../components/Footer";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { CustomInput } from "../components/CustomInput";
+import { postNewUser } from "../helpers/axiosHelper";
 
 const Signup = () => {
   const initialState = {
@@ -13,6 +14,7 @@ const Signup = () => {
     phone: "",
   };
   const [formData, setFormData] = useState(initialState);
+  const [resp, setResp] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,11 +24,20 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const { confirmPassword, ...rest } = formData;
+
+    if (confirmPassword !== rest.password) {
+      return alert("Passwords do not match!!!");
+    }
     console.log(formData);
     /* Api Call Here*/
-    setFormData(initialState);
+    const data = await postNewUser(rest);
+    setResp(data);
+    if (data.status === "success") {
+      setFormData(initialState);
+    }
   };
 
   const inputes = [
@@ -87,6 +98,11 @@ const Signup = () => {
             <div className="shadow-lg p-3 rounded border w-75 mt-5 mb-5">
               <h2>Sign Up Now</h2>
               <hr />
+              {resp?.message && (
+                <Alert variant={resp?.status === "success" ? "success" : "danger"}>
+                  {resp.message}
+                </Alert>
+              )}
               <Form onSubmit={handleSubmit}>
                 {inputes.map((item, i) => (
                   // console.log(item);
