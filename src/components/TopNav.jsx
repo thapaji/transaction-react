@@ -15,9 +15,11 @@ export const TopNav = ({ logedInUser }) => {
             {logedInUser?._id ? (
               <Nav.Link href="/">Logout</Nav.Link>
             ) : (
-              <Nav.Link href="/">Login</Nav.Link>
+              <>
+                <Nav.Link href="/">Login</Nav.Link>
+                <Nav.Link href="/signup">Sign Up</Nav.Link>
+              </>
             )}
-            <Nav.Link href="/signup">Sign Up</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
