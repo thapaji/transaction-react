@@ -6,14 +6,14 @@ import Dashboard from "./pages/Dashboard.jsx";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [logedInUser, setLogedInUser] = useState({});
 
   return (
     <div className="wrapper">
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login setLogedInUser={setLogedInUser} />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard logedInUser={logedInUser} />} />
       </Routes>
     </div>
   );

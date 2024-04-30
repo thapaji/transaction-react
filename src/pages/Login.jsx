@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { TopNav } from "../components/TopNav";
 import { Footer } from "../components/Footer";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { CustomInput } from "../components/CustomInput";
+import { loginUser } from "../helpers/axiosHelper";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setLogedInUser }) => {
   const initialState = {
     email: "",
     password: "",
   };
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(initialState);
+  const [resp, setResp] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,11 +24,18 @@ const Login = () => {
     // console.log(email, password);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    //console.log(formData);
     /* Api Call Here*/
-    setFormData(initialState);
+    const result = await loginUser(formData);
+    setResp({ status: result.status, message: result.message });
+
+    if (result?.status === "success") {
+      console.log(result.user);
+      setLogedInUser(result.user);
+      navigate("/dashboard");
+    }
   };
 
   const inputes = [
@@ -62,6 +73,11 @@ const Login = () => {
             <div className="shadow-lg p-3 rounded border w-75 mt-5 mb-5">
               <h2>Login Now</h2>
               <hr />
+              {resp?.message && (
+                <Alert variant={resp.status === "success" ? "success" : "danger"}>
+                  {resp.message}
+                </Alert>
+              )}
               <Form onSubmit={handleSubmit}>
                 {inputes.map((item, i) => (
                   // console.log(item);

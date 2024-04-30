@@ -3,7 +3,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-export const TopNav = () => {
+export const TopNav = ({ logedInUser }) => {
+  console.log(logedInUser);
   return (
     <Navbar expand="md" className="bg-info shadow-lg">
       <Container>
@@ -11,7 +12,11 @@ export const TopNav = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="/">Login</Nav.Link>
+            {logedInUser?._id ? (
+              <Nav.Link href="/">Logout</Nav.Link>
+            ) : (
+              <Nav.Link href="/">Login</Nav.Link>
+            )}
             <Nav.Link href="/signup">Sign Up</Nav.Link>
           </Nav>
         </Navbar.Collapse>
