@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { CustomInput } from "./CustomInput";
 import { Button, Col, Row } from "react-bootstrap";
 import { Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { postNewTransaction } from "../helpers/axiosHelper";
 
-export const CustomForm = () => {
+export const CustomForm = ({ getUserTransactions }) => {
   const initialState = {
     type: "",
     title: "",
@@ -21,9 +23,14 @@ export const CustomForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    formData.userId = localStorage.getItem("user")._id;
+    const { status, message } = await postNewTransaction(formData);
+    // console.log(data);
+    toast[status](message);
+    status === "success" && getUserTransactions();
     setFormData(initialState);
   };
   const handleReset = () => {
@@ -73,20 +80,18 @@ export const CustomForm = () => {
       <Row>
         {inputes.map((item, i) => (
           <Col md={6} key={i}>
-            <CustomInput {...item} />
+            <CustomInput {...item} onChange={handleChange} />
           </Col>
         ))}
       </Row>
       <Row>
         <Col md={6} className="d-grid">
           {" "}
-          <Button type="submit" onChange={handleChange}>
-            Add...
-          </Button>
+          <Button type="submit">Add...</Button>
         </Col>
         <Col md={6} className="d-grid">
           {" "}
-          <Button type="submit" variant="info" onClick={handleReset}>
+          <Button variant="info" onClick={handleReset}>
             Reset...
           </Button>
         </Col>
