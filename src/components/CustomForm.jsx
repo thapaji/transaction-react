@@ -1,9 +1,35 @@
 import React, { useState } from "react";
 import { CustomInput } from "./CustomInput";
-import { Button } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 
 export const CustomForm = () => {
+  const initialState = {
+    type: "",
+    title: "",
+    amount: "-----Select category-----",
+    date: "",
+  };
+
+  const [formData, setFormData] = useState(initialState);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    setFormData(initialState);
+  };
+  const handleReset = () => {
+    setFormData(initialState);
+  };
+
   const inputes = [
     {
       label: "Type",
@@ -12,17 +38,13 @@ export const CustomForm = () => {
       required: true,
       options: [
         {
-          value: "",
-          label: "----SELECT TYPE----",
+          value: "Income",
+          label: "Income",
         },
         {
-          value: "Debit",
-          label: "Debit",
+          value: "Expenses",
+          label: "Expenses",
         },
-        {
-          value: "Credit",
-          label: "Credit",
-        }
       ],
     },
     {
@@ -47,16 +69,28 @@ export const CustomForm = () => {
     },
   ];
   return (
-    <Form>
-      {inputes.map((item, i) => (
-        <CustomInput key={i} {...item} />
-      ))}
-      <div className="row">
-        <div className="col d-grid">
+    <Form className="shadow-lg p-3 boarder rounded" onSubmit={handleSubmit}>
+      <Row>
+        {inputes.map((item, i) => (
+          <Col md={6} key={i}>
+            <CustomInput {...item} />
+          </Col>
+        ))}
+      </Row>
+      <Row>
+        <Col md={6} className="d-grid">
           {" "}
-          <Button type="submit">Add...</Button>
-        </div>
-      </div>
+          <Button type="submit" onChange={handleChange}>
+            Add...
+          </Button>
+        </Col>
+        <Col md={6} className="d-grid">
+          {" "}
+          <Button type="submit" variant="info" onClick={handleReset}>
+            Reset...
+          </Button>
+        </Col>
+      </Row>
     </Form>
   );
 };
