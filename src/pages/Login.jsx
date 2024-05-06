@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TopNav } from "../components/TopNav";
 import { Footer } from "../components/Footer";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
@@ -6,7 +6,7 @@ import { CustomInput } from "../components/CustomInput";
 import { loginUser } from "../helpers/axiosHelper";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ setLogedInUser }) => {
+const Login = ({ setLogedInUser,logedInUser }) => {
   const initialState = {
     email: "",
     password: "",
@@ -14,6 +14,10 @@ const Login = ({ setLogedInUser }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(initialState);
   const [resp, setResp] = useState("");
+
+  useEffect(() => {
+    logedInUser?._id && navigate("/dashboard");
+  }, [logedInUser]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,8 +36,9 @@ const Login = ({ setLogedInUser }) => {
     setResp({ status: result.status, message: result.message });
 
     if (result?.status === "success") {
-      console.log(result.user);
+      // console.log(result.user);
       setLogedInUser(result.user);
+      localStorage.setItem("user", JSON.stringify(result.user));
       navigate("/dashboard");
     }
   };

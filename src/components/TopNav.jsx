@@ -4,7 +4,6 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 export const TopNav = ({ logedInUser }) => {
-  console.log(logedInUser);
   return (
     <Navbar expand="md" className="bg-info shadow-lg">
       <Container>
