@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table } from "react-bootstrap";
+import { useUser } from "../userContext";
 
-export const TransactionTable = ({ transactions }) => {
-//   console.log(transactions);
+export const TransactionTable = () => {
+  const { transactions, getUserTransactions } = useUser();
+  useEffect(() => {
+    getUserTransactions();
+  }, []);
+  
   const total = transactions.reduce((acc, item) => {
     return item.type === "Income" ? acc + item.amount : acc - item.amount;
   }, 0);
+  
   return (
     <>
       <div>{transactions.length} transactions found</div>{" "}

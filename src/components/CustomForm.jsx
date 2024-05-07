@@ -4,8 +4,10 @@ import { Button, Col, Row } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { postNewTransaction } from "../helpers/axiosHelper";
+import { useUser } from "../userContext";
 
-export const CustomForm = ({ getUserTransactions, handleClose }) => {
+export const CustomForm = ({ handleClose }) => {
+  const { getUserTransactions } = useUser();
   const initialState = {
     type: "",
     title: "",

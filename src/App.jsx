@@ -9,21 +9,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [logedInUser, setLogedInUser] = useState({});
-
-  useEffect(() => {
-    const userStr = localStorage.getItem("user");
-    userStr && setLogedInUser(JSON.parse(userStr));
-  }, []);
-
+  
   return (
     <div className="wrapper">
       <Routes>
-        <Route
-          path="/"
-          element={<Login setLogedInUser={setLogedInUser} logedInUser={logedInUser} />}
-        />
-        <Route path="/signup" element={<Signup logedInUser={logedInUser}/>} />
-        <Route path="/dashboard" element={<Dashboard logedInUser={logedInUser} />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       <ToastContainer />
     </div>

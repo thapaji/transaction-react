@@ -5,13 +5,15 @@ import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { CustomInput } from "../components/CustomInput";
 import { loginUser } from "../helpers/axiosHelper";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../userContext";
 
-const Login = ({ setLogedInUser,logedInUser }) => {
+const Login = () => {
   const initialState = {
     email: "",
     password: "",
   };
   const navigate = useNavigate();
+  const { setLogedInUser, logedInUser } = useUser();
   const [formData, setFormData] = useState(initialState);
   const [resp, setResp] = useState("");
 
@@ -25,18 +27,14 @@ const Login = ({ setLogedInUser,logedInUser }) => {
       ...formData,
       [name]: value,
     });
-    // console.log(email, password);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log(formData);
-    /* Api Call Here*/
     const result = await loginUser(formData);
     setResp({ status: result.status, message: result.message });
 
     if (result?.status === "success") {
-      // console.log(result.user);
       setLogedInUser(result.user);
       localStorage.setItem("user", JSON.stringify(result.user));
       navigate("/dashboard");

@@ -1,11 +1,13 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { useUser } from "../userContext";
 
-export const TopNav = ({ logedInUser }) => {
+export const TopNav = () => {
   const handleLogOut = () => {
     localStorage.removeItem("user");
   };
+  const { setLogedInUser, logedInUser } = useUser();
 
   return (
     <Navbar expand="md" className="bg-info shadow-lg">

@@ -5,7 +5,7 @@ import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { CustomInput } from "../components/CustomInput";
 import { postNewUser } from "../helpers/axiosHelper";
 
-const Signup = ({ logedInUser }) => {
+const Signup = () => {
   const initialState = {
     name: "",
     email: "",
@@ -79,7 +79,7 @@ const Signup = ({ logedInUser }) => {
   ];
   return (
     <div>
-      <TopNav logedInUser={logedInUser}/>
+      <TopNav />
       <Container className="main" fluid>
         <Row>
           <Col
@@ -105,7 +105,6 @@ const Signup = ({ logedInUser }) => {
               )}
               <Form onSubmit={handleSubmit}>
                 {inputes.map((item, i) => (
-                  // console.log(item);
                   <CustomInput
                     key={i}
                     {...item}

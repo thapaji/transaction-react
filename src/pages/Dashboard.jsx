@@ -4,31 +4,20 @@ import { TopNav } from "../components/TopNav";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { AuthComponent } from "../components/AuthComponent";
 import { CustomForm } from "../components/CustomForm";
-import { getTransactions } from "../helpers/axiosHelper";
 import { TransactionTable } from "../components/TransactionTable";
 import { CustomModal } from "../components/CustomModal";
+import { useUser } from "../userContext";
 
-const Dashboard = ({ logedInUser }) => {
-  // console.log(logedInUser);
-  const [transactions, setTransactions] = useState([]);
+const Dashboard = () => {
+  const { setLogedInUser, logedInUser } = useUser();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  useEffect(() => {
-    getUserTransactions();
-  }, []);
-
-  const getUserTransactions = async () => {
-    const { status, message, data } = await getTransactions();
-    // console.log(data);
-    status === "error" ? toast.error(message) : setTransactions(data);
-  };
-
   return (
-    <AuthComponent logedInUser={logedInUser}>
-      <TopNav logedInUser={logedInUser} />
+    <AuthComponent>
+      <TopNav  />
       <Container className="main pt-5">
         <h4>Dashboard | Welcome {logedInUser?.name}</h4>
         <hr />
@@ -41,9 +30,9 @@ const Dashboard = ({ logedInUser }) => {
         </Row>
         <CustomModal title={"Add New Transaction"} handleClose={handleClose} show={show}>
           {" "}
-          <CustomForm getUserTransactions={getUserTransactions} handleClose={handleClose}/>
+          <CustomForm handleClose={handleClose}/>
         </CustomModal>
-        <TransactionTable transactions={transactions} />
+        <TransactionTable />
       </Container>
       <Footer />
     </AuthComponent>
