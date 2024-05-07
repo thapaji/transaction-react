@@ -5,7 +5,7 @@ import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { CustomInput } from "../components/CustomInput";
 import { postNewUser } from "../helpers/axiosHelper";
 
-const Signup = () => {
+const Signup = ({ logedInUser }) => {
   const initialState = {
     name: "",
     email: "",
@@ -79,7 +79,7 @@ const Signup = () => {
   ];
   return (
     <div>
-      <TopNav />
+      <TopNav logedInUser={logedInUser}/>
       <Container className="main" fluid>
         <Row>
           <Col

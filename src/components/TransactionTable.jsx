@@ -2,7 +2,7 @@ import React from "react";
 import { Table } from "react-bootstrap";
 
 export const TransactionTable = ({ transactions }) => {
-  console.log(transactions);
+//   console.log(transactions);
   const total = transactions.reduce((acc, item) => {
     return item.type === "Income" ? acc + item.amount : acc - item.amount;
   }, 0);
@@ -21,7 +21,7 @@ export const TransactionTable = ({ transactions }) => {
         <tbody>
           {transactions?.map((item) => (
             <tr key={item._id}>
-              <td>{item.date.slice(0,10)}</td>
+              <td>{item.date.slice(0, 10)}</td>
               <td>{item.title}</td>
               {item.type === "Income" ? (
                 <>

@@ -5,7 +5,7 @@ import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { postNewTransaction } from "../helpers/axiosHelper";
 
-export const CustomForm = ({ getUserTransactions }) => {
+export const CustomForm = ({ getUserTransactions, handleClose }) => {
   const initialState = {
     type: "",
     title: "",
@@ -30,7 +30,7 @@ export const CustomForm = ({ getUserTransactions }) => {
     const { status, message } = await postNewTransaction(formData);
     // console.log(data);
     toast[status](message);
-    status === "success" && getUserTransactions();
+    status === "success" && getUserTransactions() && handleClose();
     setFormData(initialState);
   };
   const handleReset = () => {
@@ -78,11 +78,11 @@ export const CustomForm = ({ getUserTransactions }) => {
   return (
     <Form className="shadow-lg p-3 boarder rounded" onSubmit={handleSubmit}>
       <Row>
-        {inputes.map((item, i) => (
-          <Col md={6} key={i}>
-            <CustomInput {...item} onChange={handleChange} />
-          </Col>
-        ))}
+        <Col>
+          {inputes.map((item, i) => (
+            <CustomInput {...item} onChange={handleChange} key={i} />
+          ))}
+        </Col>
       </Row>
       <Row>
         <Col md={6} className="d-grid">

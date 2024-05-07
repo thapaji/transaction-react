@@ -22,7 +22,7 @@ function App() {
           path="/"
           element={<Login setLogedInUser={setLogedInUser} logedInUser={logedInUser} />}
         />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<Signup logedInUser={logedInUser}/>} />
         <Route path="/dashboard" element={<Dashboard logedInUser={logedInUser} />} />
       </Routes>
       <ToastContainer />

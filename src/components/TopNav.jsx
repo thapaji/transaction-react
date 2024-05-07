@@ -1,7 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 
 export const TopNav = ({ logedInUser }) => {
   const handleLogOut = () => {
@@ -16,9 +15,12 @@ export const TopNav = ({ logedInUser }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             {logedInUser?._id ? (
-              <Nav.Link href="/" onClick={handleLogOut}>
-                Logout
-              </Nav.Link>
+              <>
+                <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+                <Nav.Link href="/" onClick={handleLogOut}>
+                  Logout
+                </Nav.Link>
+              </>
             ) : (
               <>
                 <Nav.Link href="/">Login</Nav.Link>
