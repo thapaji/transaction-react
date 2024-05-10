@@ -9,6 +9,7 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
   const [logedInUser, setLogedInUser] = useState({});
   const [transactions, setTransactions] = useState([]);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const userStr = localStorage.getItem("user");
@@ -22,7 +23,15 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ logedInUser, setLogedInUser, transactions, setTransactions, getUserTransactions }}
+      value={{
+        logedInUser,
+        setLogedInUser,
+        transactions,
+        setTransactions,
+        getUserTransactions,
+        show,
+        setShow,
+      }}
     >
       {children}
     </UserContext.Provider>

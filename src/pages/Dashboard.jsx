@@ -9,28 +9,29 @@ import { CustomModal } from "../components/CustomModal";
 import { useUser } from "../userContext";
 
 const Dashboard = () => {
-  const { setLogedInUser, logedInUser } = useUser();
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const { setLogedInUser, logedInUser, show, setShow } = useUser();
 
   return (
     <AuthComponent>
-      <TopNav  />
+      <TopNav />
       <Container className="main pt-5">
         <h4>Dashboard | Welcome {logedInUser?.name}</h4>
         <hr />
         <Row>
           <Col>
-            <Button variant="primary" onClick={handleShow}>
+            <Button
+              variant="primary"
+              onClick={() => {
+                setShow(true);
+              }}
+            >
               Add New Transaction
             </Button>
           </Col>
         </Row>
-        <CustomModal title={"Add New Transaction"} handleClose={handleClose} show={show}>
+        <CustomModal title={"Add New Transaction"}>
           {" "}
-          <CustomForm handleClose={handleClose}/>
+          <CustomForm />
         </CustomModal>
         <TransactionTable />
       </Container>

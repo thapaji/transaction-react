@@ -7,7 +7,7 @@ import { postNewTransaction } from "../helpers/axiosHelper";
 import { useUser } from "../userContext";
 
 export const CustomForm = ({ handleClose }) => {
-  const { getUserTransactions } = useUser();
+  const { getUserTransactions, setShow } = useUser();
   const initialState = {
     type: "",
     title: "",
@@ -31,8 +31,9 @@ export const CustomForm = ({ handleClose }) => {
     formData.userId = localStorage.getItem("user")._id;
     const { status, message } = await postNewTransaction(formData);
     // console.log(data);
+    toast.
     toast[status](message);
-    status === "success" && getUserTransactions() && handleClose();
+    status === "success" && getUserTransactions() && setShow(false);
     setFormData(initialState);
   };
   const handleReset = () => {

@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [logedInUser, setLogedInUser] = useState({});
-  
+
   return (
     <div className="wrapper">
       <Routes>
