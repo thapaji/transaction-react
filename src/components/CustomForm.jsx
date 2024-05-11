@@ -31,7 +31,6 @@ export const CustomForm = ({ handleClose }) => {
     formData.userId = localStorage.getItem("user")._id;
     const { status, message } = await postNewTransaction(formData);
     // console.log(data);
-    toast.
     toast[status](message);
     status === "success" && getUserTransactions() && setShow(false);
     setFormData(initialState);

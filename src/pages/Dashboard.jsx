@@ -7,9 +7,11 @@ import { CustomForm } from "../components/CustomForm";
 import { TransactionTable } from "../components/TransactionTable";
 import { CustomModal } from "../components/CustomModal";
 import { useUser } from "../userContext";
+import { TransactionCharts } from "../components/TransactionCharts";
 
 const Dashboard = () => {
-  const { setLogedInUser, logedInUser, show, setShow } = useUser();
+  const { logedInUser, transactions } = useUser();
+  // console.log(transactions);
 
   return (
     <AuthComponent>
@@ -17,22 +19,11 @@ const Dashboard = () => {
       <Container className="main pt-5">
         <h4>Dashboard | Welcome {logedInUser?.name}</h4>
         <hr />
-        <Row>
-          <Col>
-            <Button
-              variant="primary"
-              onClick={() => {
-                setShow(true);
-              }}
-            >
-              Add New Transaction
-            </Button>
-          </Col>
-        </Row>
         <CustomModal title={"Add New Transaction"}>
           {" "}
           <CustomForm />
         </CustomModal>
+        <TransactionCharts />
         <TransactionTable />
       </Container>
       <Footer />

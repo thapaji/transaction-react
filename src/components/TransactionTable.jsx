@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Table } from "react-bootstrap";
+import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { useUser } from "../userContext";
 import { deleteTransactions } from "../helpers/axiosHelper";
 import { toast } from "react-toastify";
 
 export const TransactionTable = () => {
-  const { transactions, getUserTransactions } = useUser();
+  const { transactions, getUserTransactions,  setShow } = useUser();
   const [idsToDelete, setIdsToDelete] = useState([]);
-
-  useEffect;
 
   const handleOnCheckBox = (e) => {
     const { checked, value } = e.target;
@@ -50,63 +48,84 @@ export const TransactionTable = () => {
     <>
       <div className="f-flex justify-context-between">
         <div>{transactions.length} transactions found</div>
-        <Button variant="danger" onClick={handleDelete} disabled={!idsToDelete.length}>
-          Delete {idsToDelete.length} Transactions
-        </Button>
+       //have a components called here
+        <div className="border shadow p-3 rounded mt-2">
+          <div className="border shadow p-3 rounded mb-4">
+            <Row>
+              <h2>Transactions</h2>
+            </Row>
+            <Row>
+              <Col lg={2} md={3}>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    setShow(true);
+                  }}
+                >
+                  Add New Transaction
+                </Button>
+              </Col>
+              <Col lg={2} md={3}>
+                <Button variant="danger" onClick={handleDelete} disabled={!idsToDelete.length}>
+                  Delete {idsToDelete.length} Transactions
+                </Button>
+              </Col>
+            </Row>
+          </div>
+          <div>
+            <Form.Check
+              onChange={handleOnCheckBox}
+              value="all"
+              type="checkbox"
+              label="Select All"
+              checked={transactions.every((item) => idsToDelete.includes(item._id))}
+            />
+          </div>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Income</th>
+                <th>Expense</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions?.map((item) => (
+                <tr key={item._id}>
+                  <td>
+                    <Form.Check
+                      value={item._id}
+                      onChange={handleOnCheckBox}
+                      type="checkbox"
+                      label={item.date.slice(0, 10)}
+                      checked={idsToDelete.includes(item._id)}
+                    ></Form.Check>
+                  </td>
+                  <td>{item.title}</td>
+                  {item.type === "Income" ? (
+                    <>
+                      <td>{item.amount}</td>
+                      <td></td>
+                    </>
+                  ) : (
+                    <>
+                      <td></td>
+                      <td>{item.amount}</td>
+                    </>
+                  )}
+                </tr>
+              ))}
+              <tr>
+                <td colSpan={3} className="fw-bold">
+                  Total Balance
+                </td>
+                <td className={total < 1 ? "text-danger" : "text-success"}>{total}</td>
+              </tr>
+            </tbody>
+          </Table>
+        </div>
       </div>
-
-      <div>
-        <Form.Check
-          onChange={handleOnCheckBox}
-          value="all"
-          type="checkbox"
-          label="Select All"
-          checked={transactions.every((item) => idsToDelete.includes(item._id))}
-        />
-      </div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Title</th>
-            <th>Income</th>
-            <th>Expense</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions?.map((item) => (
-            <tr key={item._id}>
-              <td>
-                <Form.Check
-                  value={item._id}
-                  onChange={handleOnCheckBox}
-                  type="checkbox"
-                  label={item.date.slice(0, 10)}
-                  checked={idsToDelete.includes(item._id)}
-                ></Form.Check>
-              </td>
-              <td>{item.title}</td>
-              {item.type === "Income" ? (
-                <>
-                  <td>{item.amount}</td>
-                  <td></td>
-                </>
-              ) : (
-                <>
-                  <td></td>
-                  <td>{item.amount}</td>
-                </>
-              )}
-            </tr>
-          ))}
-          <tr>
-            <td colSpan={3} className="fw-bold">
-              Total Balance
-            </td>
-            <td className={total < 1 ? "text-danger" : "text-success"}>{total}</td>
-          </tr>
-        </tbody>
-      </Table>
     </>
   );
 };

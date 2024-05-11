@@ -10,7 +10,7 @@ export const CustomModal = ({ children, title }) => {
       <Modal
         show={show}
         onHide={() => {
-          setShow(true);
+          setShow(false);
         }}
         backdrop="static"
         keyboard={false}
