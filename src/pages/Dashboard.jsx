@@ -11,9 +11,12 @@ import { TransactionCharts } from "../components/TransactionCharts";
 import { Selecter } from "../components/Selecter";
 
 const Dashboard = () => {
-  const { logedInUser, transactions } = useUser();
-  // console.log(transactions);
+  const { logedInUser, transactions, getUserTransactions } = useUser();
 
+  useEffect(() => {
+    getUserTransactions();
+  }, []);
+  
   return (
     <AuthComponent>
       <TopNav />

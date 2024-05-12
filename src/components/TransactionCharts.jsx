@@ -5,25 +5,20 @@ import { Chart as ChartJS } from "chart.js/auto";
 import { useUser } from "../userContext";
 
 export const TransactionCharts = () => {
-  const { chartData, getUserTransactions, setChartData, calcChartData } = useUser();
+  const { chartData } = useUser();
+  console.log(chartData.mainData);
 
-  useEffect(() => {
-    getUserTransactions();
-    setChartData(calcChartData());
-  }, []);
-
-  //   console.log(chartData);
   return (
-    <Row>
+    <Row className="border shadow rounded p-3 mt-3">
       <Col>
-        <Bar data={chartData} height={150} />
+        <Bar data={chartData.mainData} height={150} />
       </Col>
       <Col>
-        <Doughnut data={chartData} width={150} />
+        <Doughnut data={chartData.mainData} width={150} />
       </Col>
-      <Col>
-        <Line data={chartData} height={150} width={150} />
-      </Col>
+      {/* <Col>
+        <Line data={chartData.lineData} height={150} width={150} />
+      </Col> */}
     </Row>
   );
 };

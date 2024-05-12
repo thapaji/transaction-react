@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { CustomInput } from "./CustomInput";
+import { useUser } from "../userContext";
 
 export const Selecter = () => {
   const initialState = {
@@ -12,6 +13,7 @@ export const Selecter = () => {
   };
 
   const [formData, setFormData] = useState(initialState);
+  const { getUserTransactions } = useUser();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,23 +21,37 @@ export const Selecter = () => {
       ...formData,
       [name]: value,
     });
-    // console.log(formData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
     formData.userId = localStorage.getItem("user")._id;
-    
 
+    /************    Initialise filter dates  ****************/
+    let fromDate, toDate;
 
+    if (formData.filter === "month") {
+      const month = formData.month.padStart(2, "0"); // Ensure two-digit month format
+      fromDate = `2024/${month}/01`;
+      toDate = `2024/${month}/31`;
+    } else if (formData.filter === "year") {
+      const year = formData.year;
+      fromDate = `${year}/01/01`;
+      toDate = `${year}/12/31`;
+    } else if (formData.filter === "date") {
+      fromDate = formData.dateFrom;
+      toDate = formData.dateTo;
+    }
 
-    
-    // const { status, message } = await postNewTransaction(formData);
-    // console.log(data);
-    // toast[status](message);
-    // status === "success" && getUserTransactions() && setShow(false);
-    setFormData(initialState);
+    const filter = {};
+    if (fromDate && toDate) {
+      filter.fromDate = fromDate;
+      filter.toDate = toDate;
+    }
+    // console.log(filter);
+    getUserTransactions(filter);
+    // setFormData(initialState);
   };
 
   const handleReset = () => {
@@ -43,7 +59,7 @@ export const Selecter = () => {
   };
 
   return (
-    <Form className="border p-4 mb-2" onSubmit={handleSubmit}>
+    <Form className="border p-4 mb-2 shadow-lg rounded" onSubmit={handleSubmit}>
       <Row>
         <Col lg={4} md={4}>
           <CustomInput

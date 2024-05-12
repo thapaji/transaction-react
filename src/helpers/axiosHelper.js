@@ -61,7 +61,8 @@ export const postNewTransaction = async (transObj) => {
     }
 }
 
-export const getTransactions = async () => {
+/********************************************** 
+export const getTransactions = async (filter) => {
     try {
         const userId = getUserId();
         if (!userId) {
@@ -82,26 +83,54 @@ export const getTransactions = async () => {
         }
     }
 }
+*************************************************/
+
+export const getTransactions = async (filter) => {
+    try {
+        const userId = getUserId();
+        if (!userId) {
+            throw new Error("User id doesn't exist. Please log in again");
+        }
+
+        const headers = {
+            Authorization: userId,
+        };
+
+        if (filter && filter.fromDate && filter.toDate) {
+            headers['fromDate'] = filter.fromDate;
+            headers['toDate'] = filter.toDate;
+        }
+
+        const { data } = await axios.get(transEp, { headers });
+        return data;
+    } catch (error) {
+        console.log(error);
+        return {
+            status: 'error',
+            message: error.message,
+        };
+    }
+};
 
 export const deleteTransactions = async (idsToDelete) => {
     try {
         const userId = getUserId();
-    
+
         if (!userId) {
-          throw new Error("User id doesn't exist! Login and try again");
+            throw new Error("User id doesn't exist! Login and try again");
         }
         const { data } = await axios.delete(transEp, {
-          data: idsToDelete,
-          headers: {
-            Authorization: userId,
-          },
+            data: idsToDelete,
+            headers: {
+                Authorization: userId,
+            },
         });
         return data;
-      } catch (error) {
+    } catch (error) {
         console.log(error);
         return {
-          status: "error",
-          message: error.message,
+            status: "error",
+            message: error.message,
         };
-      }
+    }
 }

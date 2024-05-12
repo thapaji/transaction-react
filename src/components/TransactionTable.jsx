@@ -23,10 +23,6 @@ export const TransactionTable = () => {
     }
   };
 
-  useMemo(() => {
-    getUserTransactions();
-  }, []);
-
   const total = transactions.reduce((acc, item) => {
     return item.type === "Income" ? acc + item.amount : acc - item.amount;
   }, 0);
