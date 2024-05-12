@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { useUser } from "../userContext";
 import { deleteTransactions } from "../helpers/axiosHelper";
 import { toast } from "react-toastify";
 
 export const TransactionTable = () => {
-  const { transactions, getUserTransactions,  setShow } = useUser();
+  const { transactions, getUserTransactions, setShow } = useUser();
   const [idsToDelete, setIdsToDelete] = useState([]);
 
   const handleOnCheckBox = (e) => {
@@ -23,7 +23,7 @@ export const TransactionTable = () => {
     }
   };
 
-  useEffect(() => {
+  useMemo(() => {
     getUserTransactions();
   }, []);
 
@@ -48,7 +48,7 @@ export const TransactionTable = () => {
     <>
       <div className="f-flex justify-context-between">
         <div>{transactions.length} transactions found</div>
-       //have a components called here
+        //have a components called here
         <div className="border shadow p-3 rounded mt-2">
           <div className="border shadow p-3 rounded mb-4">
             <Row>

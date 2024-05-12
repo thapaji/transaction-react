@@ -23,7 +23,7 @@ const Dashboard = () => {
           {" "}
           <CustomForm />
         </CustomModal>
-        <TransactionCharts />
+        <TransactionCharts key={transactions.length} />
         <TransactionTable />
       </Container>
       <Footer />
