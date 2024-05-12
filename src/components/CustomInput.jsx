@@ -6,7 +6,7 @@ export const CustomInput = ({ label, options, ...rest }) => {
       <Form.Label>{label}</Form.Label>
       {rest.type === "select" ? (
         <Form.Select as="select" {...rest}>
-          <option value={''}>------SELECT-------</option>
+          <option value={''}>------  SELECT  -------</option>
           {options.map((item, i) => (
             <option key={i} value={item.value}>
               {item.label}

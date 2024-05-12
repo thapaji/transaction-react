@@ -8,6 +8,7 @@ import { TransactionTable } from "../components/TransactionTable";
 import { CustomModal } from "../components/CustomModal";
 import { useUser } from "../userContext";
 import { TransactionCharts } from "../components/TransactionCharts";
+import { Selecter } from "../components/Selecter";
 
 const Dashboard = () => {
   const { logedInUser, transactions } = useUser();
@@ -23,6 +24,8 @@ const Dashboard = () => {
           {" "}
           <CustomForm />
         </CustomModal>
+        <Selecter />
+        <div>{transactions.length} transactions found</div>
         <TransactionCharts key={transactions.length} />
         <TransactionTable />
       </Container>

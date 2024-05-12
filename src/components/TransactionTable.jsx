@@ -47,8 +47,7 @@ export const TransactionTable = () => {
   return (
     <>
       <div className="f-flex justify-context-between">
-        <div>{transactions.length} transactions found</div>
-        //have a components called here
+        {/* <div>{transactions.length} transactions found</div> */}
         <div className="border shadow p-3 rounded mt-2">
           <div className="border shadow p-3 rounded mb-4">
             <Row>
